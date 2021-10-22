@@ -5,7 +5,8 @@
 # Copyright (c) 2021 Zachary Mahboub <https://github.com/zaximlo>
 # Copyright (c) 2021 Emil Overbeck <https://github.com/Swarthe>
 #
-# Subject to the MIT License. See LICENSE.txt for more information.
+# Subject to the EUPL-1.2 license or later. See LICENSE.txt for more
+# information.
 #
 
 import pygame

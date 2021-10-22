@@ -6,4 +6,5 @@ requires python3 and pygame
 
 ## License
 
-Subject to the MIT license. See `LICENSE.txt` for more information.
+Subject to the EUPL-1.2 license or later. See `LICENSE.txt` for more
+information.
