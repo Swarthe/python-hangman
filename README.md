@@ -1,6 +1,6 @@
 # python-hangman
 
-python-hangman
+python hangman
 
 requires python3 and pygame
 
