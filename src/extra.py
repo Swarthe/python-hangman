@@ -13,12 +13,18 @@
 # Variables globales
 #
 
-# Défini couleurs
-c_blanc = (255, 255, 255)
-c_rouge = (255, 0, 0)
-c_vert = (0, 255, 0)
-c_jaune = (255, 204, 0)
-c_vert_fonce = (85, 107, 47)
+# Liste de mots standard pour Unix
+fichier_dictionnaire = '/usr/share/dict/words'
+# Sinon, ressource web de mots standard (uniquement en anglais)
+page_dictionnaire = 'https://www.mit.edu/~ecprice/wordlist.10000'
+
+# Défini couleurs <https://www.color-hex.com/color-palette/36646>
+c_gris = (64, 69, 82)
+c_blanc = (238, 238, 238)
+c_rouge = (227, 0, 0)
+c_vert = (0, 207, 0)
+c_bleu = (102, 168, 246)
+c_violet = (138, 103, 226)
 
 #
 # Fonctions
