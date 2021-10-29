@@ -12,7 +12,6 @@
 import os
 import random
 import pygame
-import urllib.request
 import extra
 
 #
@@ -20,14 +19,15 @@ import extra
 #
 
 # Choisit dictionnaire
-if os.path.isfile(extra.fichier_dictionnaire):
-    dictionnaire = open(extra.fichier_dictionnaire).read().splitlines()
-    print('INFO:', 'Using local dictionary')
-    print('INFO:', 'System language is', os.getenv('LANG'))
+if os.path.isfile(extra.fichier_dict):
+    # Dictionnaire *nix si possible
+    dictionnaire = open(extra.fichier_dict).read().splitlines()
+    print('INFO:', 'Using the system dictionary')
+    print('INFO:', 'The system language is', os.getenv('LANG'))
 else:
-    dictionnaire = urllib.request.urlopen(extra.page_dictionnaire) \
-                                         .read().decode().splitlines()
-    print('INFO:', 'Using remote dictionary')
+    # Dictionnaire français sinon
+    dictionnaire = open(extra.fichier_dict_fallback).read().splitlines()
+    print('INFO:', 'Using the fallback dictionary (French only)')
 
 # Choisit un mot du dictionnaire, qui doit être en majuscules pour fonctionner
 mot = random.choice(dictionnaire).upper()

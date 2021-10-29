@@ -2,7 +2,7 @@
 
 python hangman
 
-requires python3, pygame and urllib3
+requires python3, pygame
 
 ## License
 

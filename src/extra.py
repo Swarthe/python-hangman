@@ -13,10 +13,10 @@
 # Variables globales
 #
 
-# Liste de mots standard pour Unix
-fichier_dictionnaire = '/usr/share/dict/words'
-# Sinon, ressource web de mots standard (uniquement en anglais)
-page_dictionnaire = 'https://www.mit.edu/~ecprice/wordlist.10000'
+# Liste de mots standard pour *nix
+fichier_dict = '/usr/share/dict/words'
+# Sinon, dictionnaire français de dernier recours
+fichier_dict_fallback = '../data/dict-fr.txt'
 
 # Défini couleurs <https://www.color-hex.com/color-palette/36646>
 c_gris = (64, 69, 82)
