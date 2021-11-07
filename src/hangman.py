@@ -29,6 +29,12 @@ else:
     dictionnaire = open(extra.FICHIER_DICT_FALLBACK).read().splitlines()
     print('INFO:', "Using the fallback dictionary (French only)")
 
+# Images de pendu redimensionnées
+I_MORT = pygame.transform.scale(pygame.image.load('../data/dead.png'),
+                                (200, 200))
+I_VIVE = pygame.transform.scale(pygame.image.load('../data/alive.png'),
+                                (200, 200))
+
 # Choisit un mot du dictionnaire, qui doit être en majuscules pour fonctionner
 mot = random.choice(dictionnaire).upper()
 mot_affiche = '–' * len(mot)
@@ -61,6 +67,7 @@ POLICE_ANNONCE2 = pygame.font.SysFont(None, 64)
 #
 # Fonctions
 #
+
 def render_text(window, Police, texte, couleur, y):
     '''
     window          : fenêtre où rendre le texte
@@ -82,14 +89,29 @@ def annonce_fin(gagne, reponse):
     bool -> void
     '''
     if gagne:
-        render_text(window, POLICE_ANNONCE1, 'VICTORY', extra.C_VERT, 250)
+        render_text(window, POLICE_ANNONCE1, 'VICTORY', extra.C_VERT, 150)
+        # Montrer image pendu victoire
+        window.blit(I_VIVE, (300,225))
         render_text(window, POLICE_ANNONCE2, f'The word was {reponse}',
-                    extra.C_BLANC, 450)
+                    extra.C_BLANC, 500)
+        print('INFO:', f"Image is modified from source {extra.SOURCE_IMAGE}")
 
     else:
-        render_text(window, POLICE_ANNONCE1, 'DEFEAT', extra.C_ROUGE, 250)
+        render_text(window, POLICE_ANNONCE1, 'DEFEAT', extra.C_ROUGE, 150)
+        # Montrer image pendu perte
+        window.blit(I_MORT, (300,225))
         render_text(window, POLICE_ANNONCE2, f'The word was {reponse}',
-                    extra.C_ROUGE, 450)
+                    extra.C_ROUGE, 500)
+        print('INFO:', f"Image is from source {extra.SOURCE_IMAGE}")
+
+    # Gèle le programme pour annoncer le résultat
+    pygame.display.update()
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
 
 def interprete_touche():
     '''
@@ -150,16 +172,19 @@ while run:
         else:
             couleur_lettre = extra.C_BLEU
 
-        render_text(window, POLICE_LETTRE, lettre_tapee, couleur_lettre, 500)
+        render_text(window, POLICE_LETTRE, lettre_tapee, couleur_lettre, 525)
+        pygame.display.update()
 
         if entrer:
             if lettre_tapee in mot and lettre_tapee not in lettres_essayees:
                 mot_affiche = extra.convertit(extra.evalue(lettre_tapee, mot,
                                                            mot_affiche))
+                pygame.display.update()
             elif lettre_tapee in lettres_essayees:
                 render_text(window, POLICE_CONSEIL, 'Already entered',
-                            extra.C_VIOLET, 550)
-                pygame.time.wait(250)
+                            extra.C_VIOLET, 575)
+                pygame.display.update()
+                pygame.time.wait(500)
 
             else:
                 essais -= 1

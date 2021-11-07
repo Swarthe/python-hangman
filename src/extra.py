@@ -26,6 +26,9 @@ C_VERT = (0, 207, 0)
 C_BLEU = (102, 168, 246)
 C_VIOLET = (138, 103, 226)
 
+# Source des images
+SOURCE_IMAGE = '<https://www.iconbros.com/icons/ib-g-hangman>'
+
 #
 # Fonctions
 #
