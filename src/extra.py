@@ -19,11 +19,11 @@ FICHIER_DICT = '/usr/share/dict/words'
 FICHIER_DICT_FALLBACK = '../data/dict-fr.txt'
 
 # Défini couleurs <https://www.color-hex.com/color-palette/36646>
-C_GRIS = (64, 69, 82)
-C_BLANC = (238, 238, 238)
-C_ROUGE = (227, 0, 0)
-C_VERT = (0, 207, 0)
-C_BLEU = (102, 168, 246)
+C_GRIS   = (64, 69, 82)
+C_BLANC  = (238, 238, 238)
+C_ROUGE  = (227, 0, 0)
+C_VERT   = (0, 207, 0)
+C_BLEU   = (102, 168, 246)
 C_VIOLET = (138, 103, 226)
 
 # Source des images

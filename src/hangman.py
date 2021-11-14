@@ -29,18 +29,13 @@ else:
     dictionnaire = open(extra.FICHIER_DICT_FALLBACK).read().splitlines()
     print('INFO:', "Using the fallback dictionary (French only)")
 
-# Images de pendu redimensionnées
-I_MORT = pygame.transform.scale(pygame.image.load('../data/images/dead.png'),
-                                (200, 200))
+# Organiser les images du pendu dans une liste
 
-
-
-#définir les images du pendu dans une liste
 images_hangman = []
 
-for i in range(1, 11):
-    images_hangman.append(pygame.transform.scale(pygame.image.load(f'../data/images/Hangman{i}.png'), (200, 200)))
-
+for i in range(1, 12):
+    images_hangman.append(pygame.transform.scale(pygame.image.load(
+                          f'../data/image/hangman-{i}.png'), (200, 200)))
 
 # Choisit un mot du dictionnaire, qui doit être en majuscules pour fonctionner
 mot = random.choice(dictionnaire).upper()
@@ -89,19 +84,6 @@ def render_text(window, Police, texte, couleur, y):
     coord = render_text.get_rect(center = (400, y))
     window.blit(render_text, coord)
 
-    
-
-def interprete_touche():
-    '''
-    Interprète touches de clavier
-    void -> bool
-    '''
-    global lettre_tapee
-    global run
-
-    # Quit
-
-
 #
 # Main
 #
@@ -121,7 +103,7 @@ while run:
             # Lettre
             elif event.key == pygame.K_RETURN:
                 entrer = True
-                
+
             # Ne différencie pas les majuscules
             elif event.unicode.islower() or event.unicode.isupper():
                 lettre_tapee = event.unicode.capitalize()
@@ -131,9 +113,9 @@ while run:
         render_text(window, POLICE_MOT_AFFICHE, mot_affiche, extra.C_BLANC, 75)
         render_text(window, POLICE_CONSIGNE, f'Tries left:  {essais}',
                     extra.C_BLANC, 475)
-        
-        #Dessiner l'image du pendu
-        window.blit(images_hangman[10-essais], (300,225))
+
+        # Dessine l'image du pendu
+        window.blit(images_hangman[10 - essais], (300, 225))
 
         # Vérifie si la lettre est dans le mot et a déjà été essayée
         if lettre_tapee in mot and lettre_tapee in lettres_essayees:
@@ -147,7 +129,9 @@ while run:
         else:
             couleur_lettre = extra.C_BLEU
 
-        render_text(window, POLICE_LETTRE, lettre_tapee, couleur_lettre, 525)
+        # Évalue la lettre et l'affiche de façon appropriée
+
+        render_text(window, POLICE_LETTRE, lettre_tapee, couleur_lettre, 540)
         pygame.display.update()
 
         if entrer:
@@ -168,26 +152,23 @@ while run:
 
         if mot == mot_affiche:
             gagne = True
-            
 
+    # Fin du jeu
     else:
         if gagne:
             render_text(window, POLICE_ANNONCE1, 'VICTORY', extra.C_VERT, 150)
-            # Montrer image pendu victoire
+            # Montre image pendu courante
             window.blit(images_hangman[10-essais], (300,225))
             render_text(window, POLICE_ANNONCE2, f'The word was {mot}',
                         extra.C_BLANC, 500)
-            
 
         else:
             render_text(window, POLICE_ANNONCE1, 'DEFEAT', extra.C_ROUGE, 150)
-            # Montrer image pendu perte
-            window.blit(I_MORT, (300,225))
+            # Montre image pendu perte
+            window.blit(images_hangman[10], (300,225))
             render_text(window, POLICE_ANNONCE2, f'The word was {mot}',
                         extra.C_ROUGE, 500)
-        
 
-    # Gèle le programme pour annoncer le résultat
     pygame.display.flip()
     clock.tick(60)
 pygame.quit()
