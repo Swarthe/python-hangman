@@ -4,7 +4,7 @@ python hangman
 
 requires python3, pygame
 
-## Installation and usage
+## Installation & usage
 
 ```
 git clone https://github.com/Swarthe/python-hangman/
