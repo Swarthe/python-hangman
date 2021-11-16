@@ -16,7 +16,7 @@
 # Liste de mots standard pour *nix
 FICHIER_DICT = '/usr/share/dict/words'
 # Sinon, dictionnaire français de dernier recours
-FICHIER_DICT_FALLBACK = '../data/dict-fr.txt'
+FICHIER_DICT_FALLBACK = './data/dict-fr.txt'
 
 # Défini couleurs <https://www.color-hex.com/color-palette/36646>
 C_GRIS   = (64, 69, 82)
@@ -26,8 +26,6 @@ C_VERT   = (0, 207, 0)
 C_BLEU   = (102, 168, 246)
 C_VIOLET = (138, 103, 226)
 
-# Source des images
-SOURCE_IMAGE = '<https://www.iconbros.com/icons/ib-g-hangman>'
 
 #
 # Fonctions

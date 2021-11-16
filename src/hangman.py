@@ -21,34 +21,37 @@ import extra
 # Choisit dictionnaire
 if os.path.isfile(extra.FICHIER_DICT):
     # Dictionnaire *nix si possible
+    langue = os.getenv('LANG')
     dictionnaire = open(extra.FICHIER_DICT).read().splitlines()
     print('INFO:', "Using the system dictionary")
-    print('INFO:', "The system language is", os.getenv('LANG'))
+    print('INFO:', "The system language is", langue)
 else:
     # Dictionnaire français sinon
+    langue = 'fr'
     dictionnaire = open(extra.FICHIER_DICT_FALLBACK).read().splitlines()
     print('INFO:', "Using the fallback dictionary (French only)")
 
-# Organiser les images du pendu dans une liste
+# Choisit un mot du dictionnaire, et met toutes les lettres en majuscules
+mot = random.choice(dictionnaire).upper()
+mot_affiche = '–' * len(mot)
 
+
+# Organiser les images du pendu dans une liste
 images_hangman = []
 
 for i in range(1, 12):
     images_hangman.append(pygame.transform.scale(pygame.image.load(
-                          f'../data/image/hangman-{i}.png'), (200, 200)))
+                          f'./data/image/hangman-{i}.png'), (200, 200)))
 
-# Choisit un mot du dictionnaire, qui doit être en majuscules pour fonctionner
-mot = random.choice(dictionnaire).upper()
-mot_affiche = '–' * len(mot)
 
+#Definir les variables
 gagne = False
 run = True
 lettre_tapee = ''
 essais = 10
-
 lettres_essayees = []
 
-# Montre lettres trop difficiles au début
+# Les lettres du mot avec des accents seront affichés
 for c in ["'", 'É', 'È', 'Ê', 'Ù', 'Ô', 'À', 'Ï', "Â"]:
     mot_affiche = extra.convertit(extra.evalue(c, mot, mot_affiche))
     lettres_essayees.append(c)
@@ -65,6 +68,7 @@ POLICE_CONSEIL = pygame.font.SysFont(None, 32)
 POLICE_MOT_AFFICHE = pygame.font.SysFont(None, 80)
 POLICE_ANNONCE1 = pygame.font.SysFont(None, 100)
 POLICE_ANNONCE2 = pygame.font.SysFont(None, 64)
+POLICE_ANNONCE3 = pygame.font.SysFont(None, 24)
 
 #
 # Fonctions
@@ -111,9 +115,12 @@ while run:
     if essais > 0 and not gagne:
         # Écrit la consigne
         render_text(window, POLICE_MOT_AFFICHE, mot_affiche, extra.C_BLANC, 75)
-        render_text(window, POLICE_CONSIGNE, f'Tries left:  {essais}',
+        render_text(window, POLICE_CONSIGNE, f'essais restants:  {essais}',
                     extra.C_BLANC, 475)
-
+        
+        # Écrit la langue en haut de l'écran
+        render_text(window, POLICE_ANNONCE3, f'langue: {langue}',
+                    extra.C_BLANC, 16)
         # Dessine l'image du pendu
         window.blit(images_hangman[10 - essais], (300, 225))
 
@@ -130,17 +137,13 @@ while run:
             couleur_lettre = extra.C_BLEU
 
         # Évalue la lettre et l'affiche de façon appropriée
-
-        render_text(window, POLICE_LETTRE, lettre_tapee, couleur_lettre, 540)
-        pygame.display.update()
-
         if entrer:
             if lettre_tapee in mot and lettre_tapee not in lettres_essayees:
                 mot_affiche = extra.convertit(extra.evalue(lettre_tapee, mot,
                                                            mot_affiche))
                 pygame.display.update()
             elif lettre_tapee in lettres_essayees:
-                render_text(window, POLICE_CONSEIL, 'Already entered',
+                render_text(window, POLICE_CONSEIL, 'Déjà entrée',
                             extra.C_VIOLET, 575)
                 pygame.display.update()
                 pygame.time.wait(500)
@@ -150,23 +153,29 @@ while run:
 
             lettres_essayees.append(lettre_tapee)
 
+
         if mot == mot_affiche:
             gagne = True
+        
+        render_text(window, POLICE_LETTRE, lettre_tapee, couleur_lettre, 540)
+        pygame.display.update()
+
+
 
     # Fin du jeu
     else:
         if gagne:
-            render_text(window, POLICE_ANNONCE1, 'VICTORY', extra.C_VERT, 150)
+            render_text(window, POLICE_ANNONCE1, 'VICTOIRE', extra.C_VERT, 150)
             # Montre image pendu courante
             window.blit(images_hangman[10-essais], (300,225))
-            render_text(window, POLICE_ANNONCE2, f'The word was {mot}',
+            render_text(window, POLICE_ANNONCE2, f'Le mot était {mot}',
                         extra.C_BLANC, 500)
 
         else:
-            render_text(window, POLICE_ANNONCE1, 'DEFEAT', extra.C_ROUGE, 150)
+            render_text(window, POLICE_ANNONCE1, 'DÉFAITE', extra.C_ROUGE, 150)
             # Montre image pendu perte
             window.blit(images_hangman[10], (300,225))
-            render_text(window, POLICE_ANNONCE2, f'The word was {mot}',
+            render_text(window, POLICE_ANNONCE2, f'Le mot était {mot}',
                         extra.C_ROUGE, 500)
 
     pygame.display.flip()
